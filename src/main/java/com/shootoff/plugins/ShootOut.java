@@ -66,22 +66,12 @@ public class ShootOut extends ProjectorTrainingExerciseBase implements TrainingE
 		startRound(courses.get(roundIndex));
 	}
 	
-	private double scaleX(double width, double x) {
-		final double newWidth = width * widthScaleFactor;
-		final double widthDelta = newWidth - width;
-		final double newX = x * widthScaleFactor;
-		final double deltaX = newX - x + (widthDelta / 2);
-		
-		return x + deltaX;
+	private double scaleX(double x) {
+		return x * widthScaleFactor + (10 * widthScaleFactor);
 	}
 	
-	private double scaleY(double height, double y) {
-		final double newHeight = height * heightScaleFactor;
-		final double heightDelta = newHeight - height;
-		final double newY = y * heightScaleFactor;
-		final double deltaY = newY - y + (heightDelta / 2);
-		
-		return y + deltaY;
+	private double scaleY(double y) {
+		return y * heightScaleFactor + (10 * heightScaleFactor);
 	}
 	
 	private double scaleWidth(double width) {
@@ -94,7 +84,7 @@ public class ShootOut extends ProjectorTrainingExerciseBase implements TrainingE
 	
 	private class Cover extends BoundingBox {
 		public Cover(double minX, double minY, double width, double height) {
-			super(scaleX(width, minX), scaleY(height, minY), scaleWidth(width), scaleHeight(height));
+			super(scaleX(minX), scaleY(minY), scaleWidth(width), scaleHeight(height));
 		}
 	}
 
@@ -103,7 +93,7 @@ public class ShootOut extends ProjectorTrainingExerciseBase implements TrainingE
 		private final PerceivedDistance distance;
 
 		public ClipArea(PerceivedDistance distance, double minX, double minY, double width, double height) {
-			super(scaleX(width, minX), scaleY(height, minY), scaleWidth(width), scaleHeight(height));
+			super(scaleX(minX), scaleY(minY), scaleWidth(width), scaleHeight(height));
 
 			this.distance = distance;
 			this.cover = Optional.empty();
@@ -111,7 +101,7 @@ public class ShootOut extends ProjectorTrainingExerciseBase implements TrainingE
 
 		public ClipArea(PerceivedDistance distance, Cover cover, double minX, double minY, double width,
 				double height) {
-			super(scaleX(width, minX), scaleY(height, minY), scaleWidth(width), scaleHeight(height));
+			super(scaleX(minX), scaleY(minY), scaleWidth(width), scaleHeight(height));
 
 			this.distance = distance;
 			this.cover = Optional.of(cover);
@@ -175,7 +165,7 @@ public class ShootOut extends ProjectorTrainingExerciseBase implements TrainingE
 	@SuppressWarnings("unused")
 	private void visualizeCourse(String coursePath) {
 		for (ClipArea clipArea : courseBoundingBoxes.get(coursePath)) {
-			final Optional<Target> clipTarget = addTarget(new File("@target/clip_area.target"), 10, 10);
+			final Optional<Target> clipTarget = addTarget(new File("@target/clip_area.target"), 0, 0);
 
 			if (clipTarget.isPresent()) {
 				final Target t = clipTarget.get();
@@ -188,7 +178,7 @@ public class ShootOut extends ProjectorTrainingExerciseBase implements TrainingE
 
 			Optional<Cover> cover = clipArea.getCover();
 			if (cover.isPresent()) {
-				final Optional<Target> coverTarget = addTarget(new File("@target/cover.target"), 10, 10);
+				final Optional<Target> coverTarget = addTarget(new File("@target/cover.target"), 0, 0);
 
 				if (clipTarget.isPresent()) {
 					final Target t = coverTarget.get();
