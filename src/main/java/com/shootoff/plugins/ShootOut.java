@@ -48,8 +48,7 @@ public class ShootOut extends ProjectorTrainingExerciseBase implements TrainingE
 	private int score = 0;
 	private int roundIndex = 0;
 
-	public ShootOut() {
-	}
+	public ShootOut() {}
 
 	public ShootOut(List<Target> targets) {
 		super(targets);
@@ -399,8 +398,7 @@ public class ShootOut extends ProjectorTrainingExerciseBase implements TrainingE
 	}
 
 	@Override
-	public void targetUpdate(Target target, TargetChange change) {
-	}
+	public void targetUpdate(Target target, TargetChange change) {}
 
 	@Override
 	public ExerciseMetadata getInfo() {
