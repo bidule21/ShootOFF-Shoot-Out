@@ -27,7 +27,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class ShootOut extends ProjectorTrainingExerciseBase implements TrainingExercise {
-	private static final int MIN_TARGET_VISIBLE = 20;
+	private static final int MIN_TARGET_VISIBLE = 25;
 	private static final int DEFAULT_WIDTH = 640;
 	private static final int DEFAULT_HEIGHT = 480;
 	
@@ -295,7 +295,14 @@ public class ShootOut extends ProjectorTrainingExerciseBase implements TrainingE
 
 			// Place the target in the clip area
 			final int minX = (int) clipArea.getMinX();
-			final int maxX = (int) (clipArea.getMaxX() - MIN_TARGET_VISIBLE);
+			final int maxX; 
+			if (clipArea.getWidth() > size.getWidth()) {
+				// For wide areas ensure at least half the target is visible
+				maxX = (int) (clipArea.getMaxX() - (size.getWidth() / 2));
+			} else {
+				maxX = (int) (clipArea.getMaxX() - MIN_TARGET_VISIBLE);
+			}
+			
 			final int minY = (int) clipArea.getMinY();
 			final int maxY = (int) (clipArea.getMaxY() - MIN_TARGET_VISIBLE);
 
