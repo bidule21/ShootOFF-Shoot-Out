@@ -17,7 +17,6 @@ import com.shootoff.targets.Target;
 import com.shootoff.targets.TargetRegion;
 
 import javafx.geometry.BoundingBox;
-import javafx.geometry.Bounds;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.control.CheckBox;
