@@ -17,6 +17,7 @@ import com.shootoff.targets.Target;
 import com.shootoff.targets.TargetRegion;
 
 import javafx.geometry.BoundingBox;
+import javafx.geometry.Bounds;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.control.CheckBox;
@@ -328,9 +329,15 @@ public class ShootOut extends ProjectorTrainingExerciseBase implements TrainingE
 			// Clip the target if it has cover
 			if (clipArea.getCover().isPresent()) {
 				final Point2D convertedCoords = t.parentToLocal(clipArea.getMinX(), clipArea.getMinY());
-				final Rectangle clip = new Rectangle(convertedCoords.getX(), convertedCoords.getY(),
+				final Rectangle clip = new Rectangle(convertedCoords.getX(),
+						convertedCoords.getY(),
 						clipArea.getWidth(), clipArea.getHeight());
 
+				// The clip area has the target's scale applied to it, thus we need
+				// to set a scale for the clip to counteract this
+				clip.setScaleX((clipArea.getWidth() / (clipArea.getWidth() * scale)));
+				clip.setScaleY((clipArea.getHeight() / (clipArea.getHeight() * scale)));
+				
 				t.setClip(clip);
 			}
 
